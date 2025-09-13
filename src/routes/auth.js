@@ -6,7 +6,6 @@ const authMiddleware = require("../middleware/authMiddleware");
 const userType = require("../constants/type");
 const TokenBlacklist = require("../models/TokenBlackList");
 
-
 const router = express.Router();
 const SALT_ROUNDS = parseInt(process.env.BCRYPT_SALT_ROUNDS || "10", 10);
 
@@ -46,7 +45,7 @@ router.post("/login", async (req, res) => {
     }
 
     const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, {
-      expiresIn: "1d"
+      expiresIn: "1d",
     });
 
     res.json({ token });
@@ -80,8 +79,8 @@ setInterval(async () => {
   try {
     await TokenBlacklist.destroy({
       where: {
-        expiresAt: { [require("sequelize").Op.lt]: new Date() }
-      }
+        expiresAt: { [require("sequelize").Op.lt]: new Date() },
+      },
     });
     console.log("Expired tokens cleaned");
   } catch (err) {
