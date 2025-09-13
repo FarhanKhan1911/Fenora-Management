@@ -1,3 +1,5 @@
+import "./ListPosts.scss";
+
 const ListPosts = ({ items, onEdit }) => {
   return (
     <div className='list-view'>
@@ -5,9 +7,9 @@ const ListPosts = ({ items, onEdit }) => {
         <div key={index} className='list-item'>
           {item.mediaURL ? (
             item.mediaFile?.type?.startsWith("video") || item.mediaURL.endsWith(".mp4") ? (
-              <video width='100' height='100' controls src={item.mediaURL}></video>
+              <video controls src={item.mediaURL}></video>
             ) : (
-              <img src={item.mediaURL} alt={item.title} width='100' height='100' />
+              <img src={item.mediaURL} alt={item.title} />
             )
           ) : (
             <p>No media</p>
@@ -16,7 +18,7 @@ const ListPosts = ({ items, onEdit }) => {
           <h3>{item.title}</h3>
           <p>{item.description}</p>
           <p>
-            <strong>Price:</strong> ${item.price}
+            <strong>Price:</strong> Rs.{item.price}
           </p>
           <button onClick={() => onEdit(item, index)}>Edit</button>
         </div>

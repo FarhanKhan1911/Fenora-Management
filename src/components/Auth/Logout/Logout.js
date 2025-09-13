@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUserType } from "../../../redux/action";
+import Button from "../../Button/Button";
 
 const LogoutButton = () => {
     const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const LogoutButton = () => {
         navigate("/");
     };
 
-    return <button onClick={handleLogout}>Logout</button>;
+    return <Button name={"Logout"} onClickHandle={handleLogout}/>;
 };
 
 export default LogoutButton;
