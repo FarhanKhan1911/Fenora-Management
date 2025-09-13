@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState, useRef } from "react";
-import { useNavigate, Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import LogoutButton from "../Auth/Logout/Logout";
 import { useSelector } from "react-redux";
 import CreatePost from "./Post/CreatePost/CreatePost";
