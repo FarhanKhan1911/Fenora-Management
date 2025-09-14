@@ -4,13 +4,13 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader',
-          'postcss-loader',
-          'resolve-url-loader',
+          "style-loader",
+          "css-loader",
+          "sass-loader",
+          "postcss-loader",
+          "resolve-url-loader",
           {
-            loader: 'sass-loader',
+            loader: "sass-loader",
             options: {
               sourceMap: true,
             },
