@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import axios from "axios";
 import { setUserType } from "../../../redux/action";
 import Button from "../../Button/Button";
 import { LOGOUT_API } from "../../../utils/ApisConstants";
@@ -12,7 +11,8 @@ const LogoutButton = () => {
   const handleLogout = async () => {
     const token = localStorage.getItem("token");
 
-    await axios.post(LOGOUT_API, {
+    await fetch(LOGOUT_API, {
+      method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
