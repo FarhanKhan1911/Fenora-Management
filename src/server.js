@@ -13,6 +13,7 @@ app.use(express.json());
 app.use("/api/posts", require("./routes/posts"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api", require("./routes/protected"));
+app.use("/media", express.static("media"));
 
 const PORT = process.env.PORT;
 
