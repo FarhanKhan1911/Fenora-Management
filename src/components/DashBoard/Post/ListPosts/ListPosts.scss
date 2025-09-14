@@ -1,0 +1,67 @@
+.list-view {
+  margin-top: 3rem;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .delete-post-btn {
+    position: relative;
+    left: 100%;
+    top: -18px;
+    border: none;
+  }
+
+  .list-item {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    img,
+    video {
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    h3 {
+      margin: 0.5rem 0 0.2rem;
+      color: #34495e;
+    }
+
+    p {
+      margin: 0;
+      color: #555;
+    }
+
+    button {
+      align-self: start;
+      background-color: #3498db;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .list-view {
+    padding: 1rem;
+    .list-item {
+      padding: 1rem;
+    }
+  }
+}
