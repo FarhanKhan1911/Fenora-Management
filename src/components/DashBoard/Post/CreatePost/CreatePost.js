@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
-import { getRandomId } from "../../../../utils/CommonHelper";
-import "./CreatePost.scss";
 import Button from "../../../Button/Button";
+import axios from "axios";
+import "./CreatePost.scss";
+import { createPostAPI, editPostAPI } from "../../../../utils/ApisConstants";
+import { tokenConfig, useAuth } from "../../../../hooks/useAuth";
+import { getMediaType } from "../../../../utils/CommonHelper";
+import { mediaType } from "../../../../redux/redux.type";
 
 const CreatePost = ({ addItem, editItem, itemToEdit, popupRef }) => {
   const [mediaFile, setMediaFile] = useState(null);
@@ -9,6 +13,7 @@ const CreatePost = ({ addItem, editItem, itemToEdit, popupRef }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+  const auth = useAuth();
 
   useEffect(() => {
     if (itemToEdit) {
@@ -27,39 +32,47 @@ const CreatePost = ({ addItem, editItem, itemToEdit, popupRef }) => {
     }
   };
 
-  const handleOnClose = (e) => {
-    e.preventDefault();
+  const resetForm = () => {
     setMediaFile(null);
     setPreviewURL("");
     setTitle("");
     setDescription("");
     setPrice("");
+  };
+
+  const handleOnClose = (e) => {
+    e.preventDefault();
+    resetForm();
     editItem([]);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if ((mediaFile || previewURL) && title && description && price) {
-      const item = {
-        id: itemToEdit ? itemToEdit.id : getRandomId(),
-        mediaFile,
-        mediaURL: previewURL,
-        title,
-        description,
-        price,
-      };
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("price", price);
 
-      if (itemToEdit) {
-        editItem(item);
-      } else {
-        addItem(item);
+      if (mediaFile) {
+        formData.append("mediaFile", mediaFile);
+      } else if (previewURL) {
+        formData.append("mediaURL", previewURL);
       }
 
-      setMediaFile(null);
-      setPreviewURL("");
-      setTitle("");
-      setDescription("");
-      setPrice("");
+      try {
+        let response;
+        if (itemToEdit) {
+          response = await axios.put(editPostAPI(itemToEdit.id), formData, tokenConfig(auth));
+          editItem(response.data);
+        } else {
+          response = await axios.post(createPostAPI, formData, tokenConfig(auth));
+          addItem(response.data);
+        }
+        resetForm();
+      } catch (error) {
+        console.error("Error submitting post:", error);
+      }
     }
   };
 
@@ -73,7 +86,7 @@ const CreatePost = ({ addItem, editItem, itemToEdit, popupRef }) => {
 
           {previewURL && (
             <>
-              {mediaFile?.type.startsWith("video") || previewURL.endsWith(".mp4") ? (
+              {getMediaType(previewURL) === mediaType.video ? (
                 <video width='100%' controls src={previewURL} />
               ) : (
                 <img src={previewURL} alt='Preview' />
@@ -83,7 +96,7 @@ const CreatePost = ({ addItem, editItem, itemToEdit, popupRef }) => {
 
           <input type='text' placeholder='Title' value={title} onChange={(e) => setTitle(e.target.value)} />
           <textarea placeholder='Description' value={description} onChange={(e) => setDescription(e.target.value)} />
-          <input type='number' placeholder='Price' value={price} onChange={(e) => setPrice(e.target.value)} />
+          <input type='number' placeholder='Price' value={price} onChange={(e) => setPrice(parseFloat(e.target.value))} />
           <button type='submit'>{itemToEdit ? "Update Item" : "Create Item"}</button>
         </form>
       </div>

@@ -12,6 +12,7 @@ body.no-scroll {
   display: flex;
   align-items: center;
   overflow: scroll;
+  z-index: 1;
   .create-view {
     max-width: 800px;
     margin: 2rem auto;

@@ -28,3 +28,15 @@ export const GuestRoute = ({ children }) => {
   const isAuthenticated = useAuth();
   return isAuthenticated ? <Navigate to='/dashboard' /> : children;
 };
+
+export const tokenConfig = (isAuthenticated) => {
+  if (isAuthenticated) {
+    const token = localStorage.getItem("token");
+    return {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+  }
+};

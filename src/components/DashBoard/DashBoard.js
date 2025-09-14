@@ -64,7 +64,7 @@ function Dashboard() {
       <LogoutButton />
       <Button name={"CreatePost"} onClickHandle={handleCreateOrEditPost} />
       {isPopupOpen && <CreatePost addItem={addItem} editItem={editItem} itemToEdit={itemToEdit} popupRef={popupRef} />}
-      <ListPosts items={items} onEdit={handleEdit} />
+      <ListPosts createdPosts={items} onEdit={handleEdit} />
     </Fragment>
   );
 }

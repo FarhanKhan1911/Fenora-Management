@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { setUserType } from "../../../redux/action";
+import { LOGIN_API } from "../../../utils/ApisConstants";
 
 const Login = ({ userType }) => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const Login = ({ userType }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", form);
+      const res = await axios.post(LOGIN_API, form);
       localStorage.setItem("token", res.data.token);
       dispatch(setUserType(userType));
       navigate("/dashboard");
