@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { Navigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUserType } from "../redux/action";
 
 export const useAuth = () => {
+  const dispatch = useDispatch();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
@@ -12,6 +15,7 @@ export const useAuth = () => {
         const decoded = jwtDecode(token);
         if (decoded.exp * 1000 > Date.now()) {
           setIsAuthenticated(true);
+          dispatch(setUserType(decoded.role));
         } else {
           localStorage.removeItem("token");
         }

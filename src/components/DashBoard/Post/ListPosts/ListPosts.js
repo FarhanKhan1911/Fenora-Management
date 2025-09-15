@@ -5,11 +5,13 @@ import { deletePostAPI, getAllPostsAPI } from "../../../../utils/ApisConstants";
 import { useEffect, useState } from "react";
 import { tokenConfig, useAuth } from "../../../../hooks/useAuth";
 import { getMediaType } from "../../../../utils/CommonHelper";
-import { mediaType } from "../../../../redux/redux.type";
+import { mediaType, userType } from "../../../../redux/redux.type";
+import { useSelector } from "react-redux";
 
 const ListPosts = ({ createdPosts, onEdit }) => {
   const [items, setItems] = useState([]);
   const auth = useAuth();
+  const userRoleType = useSelector((state) => state.userType);
 
   useEffect(() => {
     if (auth) {
@@ -39,7 +41,7 @@ const ListPosts = ({ createdPosts, onEdit }) => {
     <div className='list-view'>
       {items.map((item, index) => (
         <div key={item.id} className='list-item'>
-          <Button className='delete-post-btn' iconClass={"fas fa-trash"} onClickHandle={() => handleOnPostDelete(item.id)} />
+          {userRoleType === userType.SellerUser && (<Button className='delete-post-btn' iconClass={"fas fa-trash"} onClickHandle={() => handleOnPostDelete(item.id)} />)}
           {item.mediaURL?.data &&
             (getMediaType(item) === mediaType.image ? (
               <img src={item.mediaPath} alt={item.title} />
@@ -51,7 +53,11 @@ const ListPosts = ({ createdPosts, onEdit }) => {
           <p>
             <strong>Price:</strong> Rs.{item.price}
           </p>
-          <button onClick={() => onEdit(item, index)}>Edit</button>
+          {userRoleType === userType.SellerUser ? (
+            <button onClick={() => onEdit(item, index)}>Edit</button>
+          ) : (
+            <Button name={"Buy Now"} onClickHandle={() => alert("Buy functionality not implemented yet")} />
+          )}
         </div>
       ))}
     </div>
