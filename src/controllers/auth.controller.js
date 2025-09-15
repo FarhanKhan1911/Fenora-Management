@@ -9,18 +9,13 @@ const SALT_ROUNDS = parseInt(process.env.BCRYPT_SALT_ROUNDS || "10", 10);
 const userRegister = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
-
     if (![userType.BuyerUser, userType.SellerUser].includes(role)) {
       return res.status(400).json({ message: "Invalid role" });
     }
-
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) return res.status(400).json({ message: "Email already exists" });
-
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-
     const newUser = await User.create({ name, email, password: hashedPassword, role });
-
     res.status(201).json({ message: "User registered successfully", id: newUser.id });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -30,21 +25,16 @@ const userRegister = async (req, res) => {
 const userLogin = async (req, res) => {
   try {
     const { email, password, role } = req.body;
-
     const user = await User.findOne({ where: { email } });
     if (!user) return res.status(404).json({ message: "User not found" });
-
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
-
     if (user.role !== role) {
       return res.status(403).json({ message: "Incorrect role" });
     }
-
     const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-
     res.json({ token });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -76,4 +66,30 @@ setInterval(async () => {
   }
 }, 1 * 60 * 60 * 1000);
 
-module.exports = { userRegister, userLogin, userLogout };
+const getUserProfile = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await User.findByPk(userId, {
+      attributes: { exclude: ["password"] },
+    });
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const updateUserProfile = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const { name, phone, address, city, state, country, pinCode } = req.body;
+    const user = await User.findByPk(userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    await user.update({ name, phone, address, city, state, country, pinCode });
+    res.json({ message: "Profile updated successfully" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports = { userRegister, userLogin, userLogout, getUserProfile, updateUserProfile };
