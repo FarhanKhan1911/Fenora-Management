@@ -6,6 +6,7 @@ import SellerAuth from "./components/Seller/SellerAuth/SellerAuth";
 import Login from "./components/Auth/Login/Login";
 import Register from "./components/Auth/Register/Register";
 import Dashboard from "./components/DashBoard/DashBoard";
+import ProfilePage from "./components/Users/ProfilePage/ProfilePage";
 import { userType } from "./redux/redux.type";
 import { GuestRoute } from "./hooks/useAuth";
 
@@ -37,6 +38,7 @@ function App() {
           <Route path='register' element={<Register userType={userType.SellerUser} />} />
         </Route>
         <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/profile' element={<ProfilePage />} />
       </Routes>
     </Fragment>
   );

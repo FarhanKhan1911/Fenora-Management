@@ -1,5 +1,6 @@
 export const ActionType = {
   userType: "userType",
+  userId: "userId",
 };
 
 export const userType = {

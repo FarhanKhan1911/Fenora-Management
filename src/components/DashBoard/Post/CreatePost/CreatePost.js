@@ -3,7 +3,7 @@ import Button from "../../../Button/Button";
 import axios from "axios";
 import "./CreatePost.scss";
 import { createPostAPI, editPostAPI } from "../../../../utils/ApisConstants";
-import { tokenConfig, useAuth } from "../../../../hooks/useAuth";
+import { multiPartFormData, useAuth } from "../../../../hooks/useAuth";
 import { getMediaType } from "../../../../utils/CommonHelper";
 import { mediaType } from "../../../../redux/redux.type";
 
@@ -63,10 +63,10 @@ const CreatePost = ({ addItem, editItem, itemToEdit, popupRef }) => {
       try {
         let response;
         if (itemToEdit) {
-          response = await axios.put(editPostAPI(itemToEdit.id), formData, tokenConfig(auth));
+          response = await axios.put(editPostAPI(itemToEdit.id), formData, multiPartFormData(auth));
           editItem(response.data);
         } else {
-          response = await axios.post(createPostAPI, formData, tokenConfig(auth));
+          response = await axios.post(createPostAPI, formData, multiPartFormData(auth));
           addItem(response.data);
         }
         resetForm();

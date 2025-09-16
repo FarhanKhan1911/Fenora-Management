@@ -3,7 +3,7 @@ import Button from "../../../Button/Button";
 import "./ListPosts.scss";
 import { deletePostAPI, getAllPostsAPI } from "../../../../utils/ApisConstants";
 import { useEffect, useState } from "react";
-import { tokenConfig, useAuth } from "../../../../hooks/useAuth";
+import { multiPartFormData, useAuth } from "../../../../hooks/useAuth";
 import { getMediaType } from "../../../../utils/CommonHelper";
 import { mediaType, userType } from "../../../../redux/redux.type";
 import { useSelector } from "react-redux";
@@ -17,7 +17,7 @@ const ListPosts = ({ createdPosts, onEdit }) => {
     if (auth) {
       const fetchPosts = async () => {
         try {
-          const response = await axios.get(getAllPostsAPI, tokenConfig(auth));
+          const response = await axios.get(getAllPostsAPI, multiPartFormData(auth));
           setItems(response.data);
         } catch (err) {
           alert(err.response?.data?.message || "Failed to fetch posts");
@@ -29,7 +29,7 @@ const ListPosts = ({ createdPosts, onEdit }) => {
 
   const handleOnPostDelete = async (itemId) => {
     try {
-      await axios.delete(deletePostAPI(itemId), tokenConfig(auth));
+      await axios.delete(deletePostAPI(itemId), multiPartFormData(auth));
       setItems(items.filter((item) => item.id !== itemId));
       alert("Post Deleted Successfully!");
     } catch (err) {
@@ -41,7 +41,9 @@ const ListPosts = ({ createdPosts, onEdit }) => {
     <div className='list-view'>
       {items.map((item, index) => (
         <div key={item.id} className='list-item'>
-          {userRoleType === userType.SellerUser && (<Button className='delete-post-btn' iconClass={"fas fa-trash"} onClickHandle={() => handleOnPostDelete(item.id)} />)}
+          {userRoleType === userType.SellerUser && (
+            <Button className='delete-post-btn' iconClass={"fas fa-trash"} onClickHandle={() => handleOnPostDelete(item.id)} />
+          )}
           {item.mediaURL?.data &&
             (getMediaType(item) === mediaType.image ? (
               <img src={item.mediaPath} alt={item.title} />

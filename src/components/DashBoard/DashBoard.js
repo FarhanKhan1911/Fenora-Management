@@ -63,6 +63,7 @@ function Dashboard() {
     <Fragment>
       <h1>Welcome to Dashboard {userRoleType}</h1>
       <LogoutButton />
+      <Button name={"Profile"} onClickHandle={() => navigate("/profile")} />
       {userRoleType === userType.SellerUser && <Button name={"CreatePost"} onClickHandle={handleCreateOrEditPost} />}
       {isPopupOpen && <CreatePost addItem={addItem} editItem={editItem} itemToEdit={itemToEdit} popupRef={popupRef} />}
       <ListPosts createdPosts={items} onEdit={handleEdit} />
