@@ -82,10 +82,10 @@ const getUserProfile = async (req, res) => {
 const updateUserProfile = async (req, res) => {
   try {
     const userId = req.params.id;
-    const { name, phone, address, city, state, country, pinCode } = req.body;
+    const { phone, address, city, state, country, pinCode } = req.body;
     const user = await User.findByPk(userId);
     if (!user) return res.status(404).json({ message: "User not found" });
-    await user.update({ name, phone, address, city, state, country, pinCode });
+    await user.update({ phone, address, city, state, country, pinCode });
     res.json({ message: "Profile updated successfully" });
   } catch (err) {
     res.status(500).json({ message: err.message });
