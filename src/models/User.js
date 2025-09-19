@@ -16,6 +16,7 @@ const User = sequelize.define(
     state: { type: DataTypes.STRING, allowNull: true },
     country: { type: DataTypes.STRING, allowNull: true },
     pinCode: { type: DataTypes.INTEGER, allowNull: true },
+    mediaURL: { type: DataTypes.BLOB, allowNull: true },
   },
   {
     timestamps: true,

@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const TokenBlacklist = require("../models/TokenBlackList");
 const userType = require("../constants/type");
+const { postsWithMediaPath } = require("../utils/media");
 
 const SALT_ROUNDS = parseInt(process.env.BCRYPT_SALT_ROUNDS || "10", 10);
 
@@ -73,7 +74,7 @@ const getUserProfile = async (req, res) => {
       attributes: { exclude: ["password"] },
     });
     if (!user) return res.status(404).json({ message: "User not found" });
-    res.json(user);
+    res.json(postsWithMediaPath([user], req)[0]);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -85,8 +86,12 @@ const updateUserProfile = async (req, res) => {
     const { phone, address, city, state, country, pinCode } = req.body;
     const user = await User.findByPk(userId);
     if (!user) return res.status(404).json({ message: "User not found" });
-    await user.update({ phone, address, city, state, country, pinCode });
-    res.json({ message: "Profile updated successfully" });
+    const mediaURL = req.file ? `/media/${req.file.filename}` : user.mediaURL;
+    await user.update({ phone, address, city, state, country, pinCode, mediaURL });
+    res.json({
+      message: "Profile updated successfully",
+      data: postsWithMediaPath([user], req)[0],
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
