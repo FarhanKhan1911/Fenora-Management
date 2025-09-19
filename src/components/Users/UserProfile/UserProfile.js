@@ -3,7 +3,7 @@ import "./UserProfile.scss";
 import axios from "axios";
 import { UPDATE_PROFILE_API } from "../../../utils/ApisConstants";
 import { useSelector } from "react-redux";
-import { applicationJsonType, useAuth } from "../../../hooks/useAuth";
+import { multiPartFormData, useAuth } from "../../../hooks/useAuth";
 import Button from "../../Button/Button";
 
 const UserProfile = ({ user }) => {
@@ -17,6 +17,8 @@ const UserProfile = ({ user }) => {
     state: user.state || "",
     country: user.country || "",
     pinCode: user.pinCode || "",
+    profilePicture: user.mediaURL || "",
+    mediaPath: user.mediaPath || "",
   });
 
   const [originalData, setOriginalData] = useState(formData);
@@ -40,7 +42,13 @@ const UserProfile = ({ user }) => {
 
   const handleSave = async () => {
     try {
-      let response = await axios.put(UPDATE_PROFILE_API(userId), formData, applicationJsonType(auth));
+      const { mediaPath, ...formDataToSend } = formData;
+      let response = await axios.put(UPDATE_PROFILE_API(userId), formDataToSend, multiPartFormData(auth));
+      setFormData((prev) => ({
+        ...prev,
+        profilePicture: response.data.mediaURL || prev.profilePicture,
+        mediaPath: response.data.mediaPath || prev.mediaPath,
+      }));
       setOriginalData(response.data);
       setIsEditing(false);
     } catch (err) {
@@ -59,6 +67,8 @@ const UserProfile = ({ user }) => {
         state: user.state || "",
         country: user.country || "",
         pinCode: user.pinCode || "",
+        profilePicture: user.mediaURL || "",
+        mediaPath: user.mediaPath || "",
       });
       setOriginalData({
         phone: user.phone || "",
@@ -67,6 +77,8 @@ const UserProfile = ({ user }) => {
         state: user.state || "",
         country: user.country || "",
         pinCode: user.pinCode || "",
+        profilePicture: user.mediaURL || "",
+        mediaPath: user.mediaPath || "",
       });
     }
   }, [user]);
@@ -74,6 +86,25 @@ const UserProfile = ({ user }) => {
   return (
     <div className={"user-profile-container"}>
       <h2 className={"title"}>User Profile</h2>
+
+      <div className={"profile-item"}>
+        <strong>Profile Picture:</strong>
+        <div className='profile-picture-container'>
+          {formData.mediaPath ? (
+            <img src={formData.mediaPath} alt='Profile' className='profile-picture' />
+          ) : (
+            <div className='no-profile-picture'>No Profile Picture</div>
+          )}
+        </div>
+        {isEditing && (
+          <input
+            type='file'
+            accept='image/*'
+            onChange={(e) => setFormData({ ...formData, profilePicture: e.target.files[0] })}
+            className={"input"}
+          />
+        )}
+      </div>
 
       <div className={"profile-item"}>
         <strong>Name:</strong> {name}
