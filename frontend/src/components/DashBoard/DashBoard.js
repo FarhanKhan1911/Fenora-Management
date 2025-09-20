@@ -1,13 +1,14 @@
 import { Fragment, useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import LogoutButton from "../Auth/Logout/Logout";
 import { useSelector } from "react-redux";
 import CreatePost from "./Post/CreatePost/CreatePost";
 import ListPosts from "./Post/ListPosts/ListPosts";
 import Button from "../Button/Button";
+import { userType } from "../../redux/redux.type";
+import Navbar from "../Navbar/Navbar";
 
 function Dashboard() {
-  const userType = useSelector((state) => state.userType);
+  const userRoleType = useSelector((state) => state.userType);
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
   const [itemToEdit, setItemToEdit] = useState(null);
@@ -60,9 +61,9 @@ function Dashboard() {
 
   return (
     <Fragment>
-      <h1>Welcome to Dashboard {userType}</h1>
-      <LogoutButton />
-      <Button name={"CreatePost"} onClickHandle={handleCreateOrEditPost} />
+      <Navbar />
+      <h1>Welcome to Dashboard {userRoleType}</h1>
+      {userRoleType === userType.SellerUser && <Button name={"CreatePost"} onClickHandle={handleCreateOrEditPost} />}
       {isPopupOpen && <CreatePost addItem={addItem} editItem={editItem} itemToEdit={itemToEdit} popupRef={popupRef} />}
       <ListPosts createdPosts={items} onEdit={handleEdit} />
     </Fragment>

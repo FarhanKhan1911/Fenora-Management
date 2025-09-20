@@ -8,9 +8,6 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
   .delete-post-btn {
-    position: relative;
-    left: 100%;
-    top: -18px;
     border: none;
   }
 
@@ -23,6 +20,20 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+
+    .post-header-wrapper {
+      display: flex;
+      justify-content: space-between;
+
+      .author-name {
+        font-weight: bold;
+        font-size: 1.1rem;
+        color: #2c3e50;
+        cursor: pointer;
+        border: none;
+        background: none;
+      }
+    }
 
     img,
     video {
