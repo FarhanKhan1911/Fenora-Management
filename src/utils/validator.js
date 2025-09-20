@@ -9,4 +9,6 @@ const validatePostData = (data) => {
   return null;
 };
 
-module.exports = validatePostData;
+const ignoreAttributes = ["updatedAt", "createdAt", "id"];
+
+module.exports = { validatePostData, ignoreAttributes };

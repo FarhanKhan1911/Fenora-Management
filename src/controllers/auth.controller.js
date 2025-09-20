@@ -4,6 +4,7 @@ const User = require("../models/User");
 const TokenBlacklist = require("../models/TokenBlackList");
 const userType = require("../constants/type");
 const { postsWithMediaPath } = require("../utils/media");
+const { ignoreAttributes } = require("../utils/validator");
 
 const SALT_ROUNDS = parseInt(process.env.BCRYPT_SALT_ROUNDS || "10", 10);
 
@@ -71,7 +72,7 @@ const getUserProfile = async (req, res) => {
   try {
     const userId = req.params.id;
     const user = await User.findByPk(userId, {
-      attributes: { exclude: ["password"] },
+      attributes: { exclude: ["password", ignoreAttributes] },
     });
     if (!user) return res.status(404).json({ message: "User not found" });
     res.json(postsWithMediaPath([user], req)[0]);

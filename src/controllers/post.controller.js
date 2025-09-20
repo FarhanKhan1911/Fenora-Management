@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const Post = require("../models/Post");
 const { postsWithMediaPath } = require("../utils/media");
-const validatePostData = require("../utils/validator");
+const { ignoreAttributes, validatePostData } = require("../utils/validator");
 
 const createPost = async (req, res) => {
   try {
@@ -24,7 +24,16 @@ const createPost = async (req, res) => {
 
 const getAllPost = async (req, res) => {
   try {
-    const posts = await Post.findAll({ include: ["user"] });
+    const posts = await Post.findAll({
+      include: [
+        {
+          association: "user",
+          attributes: { exclude: ["password", ignoreAttributes] },
+        },
+      ],
+      attributes: { exclude: ignoreAttributes },
+      order: [["createdAt", "DESC"]],
+    });
     res.json(postsWithMediaPath(posts, req));
   } catch (err) {
     console.error(err);
