@@ -58,6 +58,11 @@ const ListPosts = ({ createdPosts, onEdit }) => {
             <p>
               <strong>Price:</strong> Rs.{item.price}
             </p>
+            {item.quantity && (
+              <p>
+                <strong>Quantity:</strong> {item.quantity}
+              </p>
+            )}
             {isCurrentUserAuthenticated ? (
               <button onClick={() => onEdit(item, index)}>Edit</button>
             ) : userRoleType === userType.BuyerUser ? (

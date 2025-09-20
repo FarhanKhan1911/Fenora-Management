@@ -13,6 +13,7 @@ const CreatePost = ({ addItem, editItem, itemToEdit, popupRef }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
   const auth = useAuth();
 
   useEffect(() => {
@@ -21,6 +22,7 @@ const CreatePost = ({ addItem, editItem, itemToEdit, popupRef }) => {
       setTitle(itemToEdit.title);
       setDescription(itemToEdit.description);
       setPrice(itemToEdit.price);
+      setQuantity(itemToEdit.quantity);
     }
   }, [itemToEdit]);
 
@@ -38,6 +40,7 @@ const CreatePost = ({ addItem, editItem, itemToEdit, popupRef }) => {
     setTitle("");
     setDescription("");
     setPrice("");
+    setQuantity("");
   };
 
   const handleOnClose = (e) => {
@@ -53,6 +56,9 @@ const CreatePost = ({ addItem, editItem, itemToEdit, popupRef }) => {
       formData.append("title", title);
       formData.append("description", description);
       formData.append("price", price);
+      if (quantity) {
+        formData.append("quantity", quantity);
+      }
 
       if (mediaFile) {
         formData.append("mediaFile", mediaFile);
@@ -97,6 +103,7 @@ const CreatePost = ({ addItem, editItem, itemToEdit, popupRef }) => {
           <input type='text' placeholder='Title' value={title} onChange={(e) => setTitle(e.target.value)} />
           <textarea placeholder='Description' value={description} onChange={(e) => setDescription(e.target.value)} />
           <input type='number' placeholder='Price' value={price} onChange={(e) => setPrice(parseFloat(e.target.value))} />
+          <input type='number' placeholder='Quantity' value={quantity} onChange={(e) => setQuantity(parseFloat(e.target.value))} />
           <button type='submit'>{itemToEdit ? "Update Item" : "Create Item"}</button>
         </form>
       </div>
