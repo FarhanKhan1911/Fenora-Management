@@ -49,7 +49,7 @@ const ListPosts = ({ createdPosts, onEdit }) => {
       {items.map((item, index) => {
         const isCurrentUserAuthenticated = userId === item.userId;
         return (
-          <div key={item.id} className='list-item'>
+          <div key={index} className='list-item'>
             <div className='post-header-wrapper'>
               <Button name={item.user.name} className='author-name' onClickHandle={() => handleTitleClick(item)} />
               {isCurrentUserAuthenticated && (
