@@ -1,15 +1,13 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import BuyerBg from "../../../media/assets/images/buyer.png";
-import Navbar from "../../Navbar/Navbar";
 import "./BuyerAuth.scss";
 
-const BuyerAuth = ({basePath}) => {
+const BuyerAuth = ({ basePath }) => {
   const location = useLocation();
   const isLoginPage = location.pathname === `/${basePath}/login`;
   const isRegisterPage = location.pathname === `/${basePath}/register`;
   return (
     <section className='buyer-screen'>
-      <Navbar />
       {!(isLoginPage || isRegisterPage) ? (
         <div className='container'>
           <div className='row'>
@@ -19,7 +17,7 @@ const BuyerAuth = ({basePath}) => {
             <div className='col-md-4'></div>
             <div className='col-md-6 col-12'>
               <div className=''>
-                <img className='dev' src={BuyerBg} alt='' />
+                <img className='user-background' src={BuyerBg} alt='' />
               </div>
             </div>
           </div>

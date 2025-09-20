@@ -7,10 +7,12 @@ import { multiPartFormData, useAuth } from "../../../../hooks/useAuth";
 import { getMediaType } from "../../../../utils/CommonHelper";
 import { mediaType, userType } from "../../../../redux/redux.type";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const ListPosts = ({ createdPosts, onEdit }) => {
   const [items, setItems] = useState([]);
   const auth = useAuth();
+  const navigate = useNavigate();
   const userRoleType = useSelector((state) => state.userType);
   const userId = useSelector((state) => state.userId);
 
@@ -22,6 +24,10 @@ const ListPosts = ({ createdPosts, onEdit }) => {
     } catch (err) {
       alert(err.response?.data?.message || "Failed to delete post");
     }
+  };
+
+  const handleTitleClick = (item) => {
+    navigate(`/profile/${item.userId}`);
   };
 
   useEffect(() => {
@@ -44,9 +50,12 @@ const ListPosts = ({ createdPosts, onEdit }) => {
         const isCurrentUserAuthenticated = userId === item.userId;
         return (
           <div key={item.id} className='list-item'>
-            {isCurrentUserAuthenticated && (
-              <Button className='delete-post-btn' iconClass={"fas fa-trash"} onClickHandle={() => handleOnPostDelete(item.id)} />
-            )}
+            <div className='post-header-wrapper'>
+              <Button name={item.user.name} className='author-name' onClickHandle={() => handleTitleClick(item)} />
+              {isCurrentUserAuthenticated && (
+                <Button className='delete-post-btn' iconClass={"fas fa-trash"} onClickHandle={() => handleOnPostDelete(item.id)} />
+              )}
+            </div>
             {item.mediaURL?.data &&
               (getMediaType(item) === mediaType.image ? (
                 <img src={item.mediaPath} alt={item.title} />

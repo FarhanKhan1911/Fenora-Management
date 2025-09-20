@@ -38,7 +38,7 @@ function App() {
           <Route path='register' element={<Register userType={userType.SellerUser} />} />
         </Route>
         <Route path='/dashboard' element={<Dashboard />} />
-        <Route path='/profile' element={<ProfilePage />} />
+        <Route path='/profile/:userId' element={<ProfilePage />} />
       </Routes>
     </Fragment>
   );

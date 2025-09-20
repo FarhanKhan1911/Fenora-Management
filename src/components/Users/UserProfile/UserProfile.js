@@ -123,14 +123,15 @@ const UserProfile = ({ user }) => {
       {renderField("Country", "country", formData.country, isEditing, handleChange)}
       {renderField("Pin Code", "pinCode", formData.pinCode, isEditing, handleChange)}
 
-      {!isEditing ? (
-        <Button name={"Edit"} onClickHandle={handleEdit} />
-      ) : (
-        <div style={{ marginTop: "1rem" }}>
-          <Button name={"Save"} onClickHandle={handleSave} styleItem={{ marginRight: "10px" }} />
-          <Button name={"Cancel"} onClickHandle={handleCancel} className={"cancel-button"} />
-        </div>
-      )}
+      {userId === user.id &&
+        (!isEditing ? (
+          <Button name={"Edit"} onClickHandle={handleEdit} />
+        ) : (
+          <div style={{ marginTop: "1rem" }}>
+            <Button name={"Save"} onClickHandle={handleSave} styleItem={{ marginRight: "10px" }} />
+            <Button name={"Cancel"} onClickHandle={handleCancel} className={"cancel-button"} />
+          </div>
+        ))}
     </div>
   );
 };

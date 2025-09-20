@@ -3,19 +3,18 @@ import UserProfile from "../UserProfile/UserProfile";
 import { multiPartFormData, useAuth } from "../../../hooks/useAuth";
 import axios from "axios";
 import { GET_PROFILE_API } from "../../../utils/ApisConstants";
-import { useSelector } from "react-redux";
 import Button from "../../Button/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ProfilePage = () => {
-  const userId = useSelector((state) => state.userId);
+  const { userId } = useParams();
   const [userData, setUserData] = useState({});
   const navigate = useNavigate();
-
   const auth = useAuth();
+
   useEffect(() => {
     if (auth) {
-      const fetchPosts = async () => {
+      const fetchProfile = async () => {
         try {
           const response = await axios.get(GET_PROFILE_API(userId), multiPartFormData(auth));
           setUserData(response.data);
@@ -23,7 +22,7 @@ const ProfilePage = () => {
           alert(err.response?.data?.message || "Failed to fetch User Data");
         }
       };
-      fetchPosts();
+      fetchProfile();
     }
   }, [auth, userId]);
 
