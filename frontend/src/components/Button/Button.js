@@ -8,10 +8,11 @@ import { Link } from "react-router-dom";
  * @param {string} [props.className] - CSS class for the button.
  * @param {string} [props.iconClass] - Optional icon class.
  * @param {string} [props.to] - If provided, renders a Link instead of a button.
+ * @param {string} [props.styleItem] - inline styles.
  * @returns {JSX.Element}
  */
 
-const Button = ({ name, onClickHandle, className = "button", iconClass, to }) => {
+const Button = ({ name, onClickHandle, className = "button", iconClass, to, styleItem }) => {
   const content = (
     <>
       {iconClass && <i className={iconClass}></i>}
@@ -21,11 +22,11 @@ const Button = ({ name, onClickHandle, className = "button", iconClass, to }) =>
   );
 
   return to ? (
-    <Link to={to} className={className} aria-label={name}>
+    <Link style={styleItem} to={to} className={className} aria-label={name}>
       {content}
     </Link>
   ) : (
-    <button className={className} aria-label={name} onClick={onClickHandle}>
+    <button style={styleItem} className={className} aria-label={name} onClick={onClickHandle}>
       {content}
     </button>
   );

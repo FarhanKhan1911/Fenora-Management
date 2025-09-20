@@ -7,6 +7,7 @@ const Post = sequelize.define("Post", {
   title: { type: DataTypes.STRING, allowNull: false },
   description: { type: DataTypes.TEXT, allowNull: false },
   price: { type: DataTypes.FLOAT, allowNull: false },
+  quantity: { type: DataTypes.INTEGER, allowNull: true },
 });
 Post.belongsTo(User, { foreignKey: "userId", as: "user" });
 

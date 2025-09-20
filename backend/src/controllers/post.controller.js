@@ -6,7 +6,7 @@ const validatePostData = require("../utils/validator");
 
 const createPost = async (req, res) => {
   try {
-    const { title, description, price } = req.body;
+    const { title, description, price, quantity } = req.body;
 
     const mediaURL = req.file ? `/media/${req.file.filename}` : null;
 
@@ -14,7 +14,7 @@ const createPost = async (req, res) => {
     if (validationError) return res.status(400).json({ message: validationError });
 
     const userId = req.user.id;
-    const newPost = await Post.create({ mediaURL, title, description, price, userId });
+    const newPost = await Post.create({ mediaURL, title, description, price, quantity, userId });
     res.status(201).json(newPost);
   } catch (err) {
     console.error(err);
@@ -40,12 +40,12 @@ const editPost = async (req, res) => {
     const userId = req.user.id;
     if (post.userId !== userId) return res.status(403).json({ message: "Unauthorized" });
 
-    const { title, description, price } = req.body;
+    const { title, description, price, quantity } = req.body;
     const mediaURL = req.file ? `/media/${req.file.filename}` : post.mediaURL;
     const validationError = validatePostData({ ...req.body, mediaURL });
     if (validationError) return res.status(400).json({ message: validationError });
 
-    await post.update({ mediaURL, title, description, price });
+    await post.update({ mediaURL, title, description, price, quantity });
     res.json(post);
   } catch (err) {
     console.error(err);

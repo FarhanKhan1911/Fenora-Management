@@ -1,6 +1,5 @@
 import MainShop from "../../media/assets/images/mainshop.png";
 import "./StartScreen.scss";
-import Navbar from "../Navbar/Navbar";
 import { Fragment } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Button from "../Button/Button";
@@ -10,7 +9,6 @@ const StartScreen = () => {
 
   return (
     <section className='start-screen'>
-      <Navbar />
       <img src={MainShop} className='bg' alt='' />
       <div className='content' id='home' data-aos='fade-up'>
         <h2>Fenora Management</h2>
