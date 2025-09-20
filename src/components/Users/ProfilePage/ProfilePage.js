@@ -4,10 +4,13 @@ import { multiPartFormData, useAuth } from "../../../hooks/useAuth";
 import axios from "axios";
 import { GET_PROFILE_API } from "../../../utils/ApisConstants";
 import { useSelector } from "react-redux";
+import Button from "../../Button/Button";
+import { useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {
   const userId = useSelector((state) => state.userId);
   const [userData, setUserData] = useState({});
+  const navigate = useNavigate();
 
   const auth = useAuth();
   useEffect(() => {
@@ -24,7 +27,18 @@ const ProfilePage = () => {
     }
   }, [auth, userId]);
 
-  return <div>{userData && Object.keys(userData).length > 0 ? <UserProfile user={userData} /> : <p>Loading profile...</p>}</div>;
+  return (
+    <>
+      {userData && Object.keys(userData).length > 0 ? (
+        <>
+          <Button name={"back"} onClickHandle={() => navigate("/dashboard")} />
+          <UserProfile user={userData} />
+        </>
+      ) : (
+        <p>Loading profile...</p>
+      )}
+    </>
+  );
 };
 
 export default ProfilePage;
