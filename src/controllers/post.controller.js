@@ -28,13 +28,21 @@ const getAllPost = async (req, res) => {
       include: [
         {
           association: "user",
-          attributes: { exclude: ["password", ignoreAttributes] },
+          attributes: { exclude: ["password", ...ignoreAttributes] },
         },
       ],
       attributes: { exclude: ignoreAttributes },
       order: [["createdAt", "DESC"]],
     });
-    res.json(postsWithMediaPath(posts, req));
+
+    let postData = postsWithMediaPath(posts, req);
+    postData.forEach((post) => {
+      if (post.user) {
+        post.user = postsWithMediaPath([post.user], req)[0];
+      }
+    });
+
+    res.json(postData);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "An error occurred while fetching posts." });
