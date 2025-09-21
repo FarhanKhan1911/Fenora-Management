@@ -25,6 +25,14 @@
       display: flex;
       justify-content: space-between;
 
+      .profile-pic {
+        width: 53px;
+        height: 53px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 5px;
+      }
+
       .author-name {
         font-weight: bold;
         font-size: 1.1rem;
@@ -32,6 +40,11 @@
         cursor: pointer;
         border: none;
         background: none;
+        display: flex;
+        align-items: center;
+        padding-left: 0px;
+        width: min-content;
+        text-wrap: nowrap;
       }
     }
 

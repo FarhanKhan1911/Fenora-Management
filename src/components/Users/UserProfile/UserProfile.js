@@ -5,6 +5,7 @@ import { UPDATE_PROFILE_API } from "../../../utils/ApisConstants";
 import { useSelector } from "react-redux";
 import { multiPartFormData, useAuth } from "../../../hooks/useAuth";
 import Button from "../../Button/Button";
+import defaultProfilePic from "../../../media/assets/images/default-profile.png";
 
 const UserProfile = ({ user }) => {
   const userId = useSelector((state) => state.userId);
@@ -90,11 +91,7 @@ const UserProfile = ({ user }) => {
       <div className={"profile-item"}>
         <strong>Profile Picture:</strong>
         <div className='profile-picture-container'>
-          {formData.mediaPath ? (
-            <img src={formData.mediaPath} alt='Profile' className='profile-picture' />
-          ) : (
-            <div className='no-profile-picture'>No Profile Picture</div>
-          )}
+          <img src={formData.mediaPath !== "" ? formData.mediaPath : defaultProfilePic} alt='Profile' className='profile-picture' />
         </div>
         {isEditing && (
           <input

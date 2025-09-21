@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
  * @returns {JSX.Element}
  */
 
-const Button = ({ name, onClickHandle, className = "button", iconClass, to, styleItem }) => {
+const Button = ({ name, onClickHandle, className = "button", iconClass, to, styleItem, children }) => {
   const content = (
     <>
       {iconClass && <i className={iconClass}></i>}
@@ -27,6 +27,7 @@ const Button = ({ name, onClickHandle, className = "button", iconClass, to, styl
     </Link>
   ) : (
     <button style={styleItem} className={className} aria-label={name} onClick={onClickHandle}>
+      {children}
       {content}
     </button>
   );
