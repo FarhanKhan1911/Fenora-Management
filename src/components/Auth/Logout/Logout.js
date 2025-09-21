@@ -23,7 +23,7 @@ const LogoutButton = () => {
     navigate("/");
   };
 
-  return <Button name={"Logout"} onClickHandle={handleLogout} />;
+  return <Button name={"Logout"} className='logout-btn' iconClass='fas fa-power-off' isExtraSpace={false} onClickHandle={handleLogout} />;
 };
 
 export default LogoutButton;

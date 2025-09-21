@@ -9,10 +9,18 @@ import Dashboard from "./components/DashBoard/DashBoard";
 import ProfilePage from "./components/Users/ProfilePage/ProfilePage";
 import { userType } from "./redux/redux.type";
 import { GuestRoute } from "./hooks/useAuth";
+import Chat from "./components/Chat/Chat";
+import Navbar from "./components/Navbar/Navbar";
+import { useLocation } from "react-router-dom";
+import { hideNavbarPatterns } from "./utils/constants";
 
 function App() {
+  const location = useLocation();
+  const shouldHideNavbar = hideNavbarPatterns.some((pattern) => pattern.test(location.pathname));
+
   return (
     <Fragment>
+      {!shouldHideNavbar && <Navbar />}
       <Routes>
         <Route path='/' element={<StartScreen />} />
         <Route
@@ -39,6 +47,7 @@ function App() {
         </Route>
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/profile/:userId' element={<ProfilePage />} />
+        <Route path='/chat' element={<Chat />} />
       </Routes>
     </Fragment>
   );

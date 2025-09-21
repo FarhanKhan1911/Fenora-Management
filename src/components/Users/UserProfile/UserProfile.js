@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { multiPartFormData, useAuth } from "../../../hooks/useAuth";
 import Button from "../../Button/Button";
 import defaultProfilePic from "../../../media/assets/images/default-profile.png";
+import BackButton from "../../Button/BackButton";
 
 const UserProfile = ({ user }) => {
   const userId = useSelector((state) => state.userId);
@@ -86,49 +87,54 @@ const UserProfile = ({ user }) => {
 
   return (
     <div className={"user-profile-container"}>
+      <BackButton />
       <h2 className={"title"}>User Profile</h2>
-
       <div className={"profile-item"}>
-        <strong>Profile Picture:</strong>
         <div className='profile-picture-container'>
           <img src={formData.mediaPath !== "" ? formData.mediaPath : defaultProfilePic} alt='Profile' className='profile-picture' />
+          {isEditing && (
+            <input
+              type='file'
+              accept='image/*'
+              onChange={(e) => setFormData({ ...formData, profilePicture: e.target.files[0] })}
+              className={"input"}
+            />
+          )}
+          <div className='profile-name'>{name}</div>
+          <div className='profile-role'>{role}</div>
         </div>
-        {isEditing && (
-          <input
-            type='file'
-            accept='image/*'
-            onChange={(e) => setFormData({ ...formData, profilePicture: e.target.files[0] })}
-            className={"input"}
-          />
-        )}
       </div>
 
-      <div className={"profile-item"}>
-        <strong>Name:</strong> {name}
-      </div>
-      <div className={"profile-item"}>
-        <strong>Email:</strong> {email}
-      </div>
-      <div className={"profile-item"}>
-        <strong>Role:</strong> {role}
+      <hr />
+
+      <div className='profile-info'>
+        <div className={"profile-item"}>
+          <strong>Name:</strong> {name}
+        </div>
+        <div className={"profile-item"}>
+          <strong>Email:</strong> {email}
+        </div>
+
+        {renderField("Phone", "phone", formData.phone, isEditing, handleChange)}
+        {renderField("Address", "address", formData.address, isEditing, handleChange)}
+        {renderField("City", "city", formData.city, isEditing, handleChange)}
+        {renderField("State", "state", formData.state, isEditing, handleChange)}
+        {renderField("Country", "country", formData.country, isEditing, handleChange)}
+        {renderField("Pin Code", "pinCode", formData.pinCode, isEditing, handleChange)}
       </div>
 
-      {renderField("Phone", "phone", formData.phone, isEditing, handleChange)}
-      {renderField("Address", "address", formData.address, isEditing, handleChange)}
-      {renderField("City", "city", formData.city, isEditing, handleChange)}
-      {renderField("State", "state", formData.state, isEditing, handleChange)}
-      {renderField("Country", "country", formData.country, isEditing, handleChange)}
-      {renderField("Pin Code", "pinCode", formData.pinCode, isEditing, handleChange)}
-
-      {userId === user.id &&
-        (!isEditing ? (
-          <Button name={"Edit"} onClickHandle={handleEdit} />
-        ) : (
-          <div style={{ marginTop: "1rem" }}>
-            <Button name={"Save"} onClickHandle={handleSave} styleItem={{ marginRight: "10px" }} />
-            <Button name={"Cancel"} onClickHandle={handleCancel} className={"cancel-button"} />
-          </div>
-        ))}
+      {userId === user.id && (
+        <div className='action-button-wrapper' style={{ marginTop: "1rem" }}>
+          {!isEditing ? (
+            <Button name={"Edit"} onClickHandle={handleEdit} />
+          ) : (
+            <>
+              <Button name={"Save"} onClickHandle={handleSave} styleItem={{ marginRight: "10px" }} />
+              <Button name={"Cancel"} onClickHandle={handleCancel} className={"cancel-button"} />
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 };

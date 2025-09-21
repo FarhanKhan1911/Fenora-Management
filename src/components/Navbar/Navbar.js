@@ -8,13 +8,28 @@ const Navbar = () => {
   const navigate = useNavigate();
   const userId = useSelector((state) => state.userId);
   return (
-    <header className='site-header'>
-      <div className='logo'>A PLACE YOU CALL HOME</div>
-      <nav className='navbar'>
-        <Button name={"Profile"} onClickHandle={() => navigate(`/profile/${userId}`)} />
+    <div className='site-header'>
+      <div className='header-left'>
+        <Button name={"A PLACE YOU CALL HOME"} iconClass='fas fa-home' className='home' onClickHandle={() => navigate("/dashboard")} />
+      </div>
+      <div className='header-right'>
+        <Button
+          name={"Chat"}
+          className='chat-btn'
+          iconClass='far fa-comment'
+          isExtraSpace={false}
+          onClickHandle={() => navigate(`/chat`)}
+        />
+        <Button
+          name={"Profile"}
+          className='profile-btn'
+          iconClass='far fa-user'
+          isExtraSpace={false}
+          onClickHandle={() => navigate(`/profile/${userId}`)}
+        />
         <LogoutButton />
-      </nav>
-    </header>
+      </div>
+    </div>
   );
 };
 
