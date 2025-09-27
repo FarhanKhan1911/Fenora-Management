@@ -1,7 +1,7 @@
 import axios from "axios";
 import Button from "../../../Button/Button";
 import "./ListPosts.scss";
-import { deletePostAPI, getAllPostsAPI } from "../../../../utils/ApisConstants";
+import { DELETE_POST_API, GET_ALL_POSTS_API } from "../../../../utils/ApisConstants";
 import { useEffect, useState } from "react";
 import { multiPartFormData, useAuth } from "../../../../hooks/useAuth";
 import { getMediaType } from "../../../../utils/CommonHelper";
@@ -19,7 +19,7 @@ const ListPosts = ({ createdPosts, onEdit }) => {
 
   const handleOnPostDelete = async (itemId) => {
     try {
-      await axios.delete(deletePostAPI(itemId), multiPartFormData(auth));
+      await axios.delete(DELETE_POST_API(itemId), multiPartFormData(auth));
       setItems(items.filter((item) => item.id !== itemId));
       alert("Post Deleted Successfully!");
     } catch (err) {
@@ -35,7 +35,7 @@ const ListPosts = ({ createdPosts, onEdit }) => {
     if (auth) {
       const fetchPosts = async () => {
         try {
-          const response = await axios.get(getAllPostsAPI, multiPartFormData(auth));
+          const response = await axios.get(GET_ALL_POSTS_API, multiPartFormData(auth));
           setItems(response.data);
         } catch (err) {
           alert(err.response?.data?.message || "Failed to fetch posts");

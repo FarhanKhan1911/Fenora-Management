@@ -13,6 +13,8 @@ import Chat from "./components/Chat/Chat";
 import Navbar from "./components/Navbar/Navbar";
 import { useLocation } from "react-router-dom";
 import { hideNavbarPatterns } from "./utils/constants";
+import ForgetPassword from "./components/Auth/ForgetPassword/ForgetPassword";
+import ResetPassword from "./components/Auth/ForgetPassword/ResetPassword/ResetPassword";
 
 function App() {
   const location = useLocation();
@@ -45,6 +47,8 @@ function App() {
           <Route path='login' element={<Login userType={userType.SellerUser} />} />
           <Route path='register' element={<Register userType={userType.SellerUser} />} />
         </Route>
+        <Route path='/forget-password' element={<ForgetPassword />} />
+        <Route path='/reset-password/:id/:token' element={<ResetPassword />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/profile/:userId' element={<ProfilePage />} />
         <Route path='/chat' element={<Chat />} />
