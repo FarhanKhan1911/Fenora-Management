@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const Post = require("../models/Post");
 const { postsWithMediaPath } = require("../utils/media");
-const validatePostData = require("../utils/validator");
+const { ignoreAttributes, validatePostData } = require("../utils/validator");
 
 const createPost = async (req, res) => {
   try {
@@ -24,8 +24,25 @@ const createPost = async (req, res) => {
 
 const getAllPost = async (req, res) => {
   try {
-    const posts = await Post.findAll({ include: ["user"] });
-    res.json(postsWithMediaPath(posts, req));
+    const posts = await Post.findAll({
+      include: [
+        {
+          association: "user",
+          attributes: { exclude: ["password", ...ignoreAttributes] },
+        },
+      ],
+      attributes: { exclude: ignoreAttributes.slice(0, -1) },
+      order: [["createdAt", "DESC"]],
+    });
+
+    let postData = postsWithMediaPath(posts, req);
+    postData.forEach((post) => {
+      if (post.user) {
+        post.user = postsWithMediaPath([post.user], req)[0];
+      }
+    });
+
+    res.json(postData);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "An error occurred while fetching posts." });
