@@ -5,8 +5,10 @@ export const getRandomId = () => {
 };
 
 export const getMediaType = (item) => {
-  const url = item.mediaPath || (typeof item.mediaURL === "string" ? item.mediaURL : null);
-  if (!url) return mediaType.unknown;
+  let url = item.mediaPath || (typeof item.mediaURL === "string" ? item.mediaURL : null);
+  if (!url) {
+    url = item.name || item;
+  }
 
   const extension = url.split(".").pop().toLowerCase();
 

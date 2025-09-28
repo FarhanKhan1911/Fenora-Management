@@ -8,15 +8,17 @@ import { Link } from "react-router-dom";
  * @param {string} [props.className] - CSS class for the button.
  * @param {string} [props.iconClass] - Optional icon class.
  * @param {string} [props.to] - If provided, renders a Link instead of a button.
- * @param {string} [props.styleItem] - inline styles.
+ * @param {object} [props.styleItem] - inline styles.
+ * @param {HTMLElement} [props.children] - html element.
+ * @param {boolean} [props.isExtraSpace] - extra space required.
  * @returns {JSX.Element}
  */
 
-const Button = ({ name, onClickHandle, className = "button", iconClass, to, styleItem }) => {
+const Button = ({ name, onClickHandle, className = "button", iconClass, to, styleItem, children, isExtraSpace = true }) => {
   const content = (
     <>
       {iconClass && <i className={iconClass}></i>}
-      {name && iconClass && <>&nbsp;&nbsp;&nbsp;</>}
+      {name && iconClass && isExtraSpace && <>&nbsp;&nbsp;&nbsp;</>}
       {name}
     </>
   );
@@ -27,6 +29,7 @@ const Button = ({ name, onClickHandle, className = "button", iconClass, to, styl
     </Link>
   ) : (
     <button style={styleItem} className={className} aria-label={name} onClick={onClickHandle}>
+      {children}
       {content}
     </button>
   );

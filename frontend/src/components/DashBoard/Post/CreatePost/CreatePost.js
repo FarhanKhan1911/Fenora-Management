@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Button from "../../../Button/Button";
 import axios from "axios";
 import "./CreatePost.scss";
-import { createPostAPI, editPostAPI } from "../../../../utils/ApisConstants";
+import { CREATE_POST_API, EDIT_POST_API } from "../../../../utils/ApisConstants";
 import { multiPartFormData, useAuth } from "../../../../hooks/useAuth";
 import { getMediaType } from "../../../../utils/CommonHelper";
 import { mediaType } from "../../../../redux/redux.type";
@@ -69,10 +69,10 @@ const CreatePost = ({ addItem, editItem, itemToEdit, popupRef }) => {
       try {
         let response;
         if (itemToEdit) {
-          response = await axios.put(editPostAPI(itemToEdit.id), formData, multiPartFormData(auth));
+          response = await axios.put(EDIT_POST_API(itemToEdit.id), formData, multiPartFormData(auth));
           editItem(response.data);
         } else {
-          response = await axios.post(createPostAPI, formData, multiPartFormData(auth));
+          response = await axios.post(CREATE_POST_API, formData, multiPartFormData(auth));
           addItem(response.data);
         }
         resetForm();
@@ -90,15 +90,23 @@ const CreatePost = ({ addItem, editItem, itemToEdit, popupRef }) => {
         <form onSubmit={handleSubmit}>
           <input type='file' accept='image/*,video/*' onChange={handleFileChange} />
 
-          {previewURL && (
+          {mediaFile ? (
             <>
-              {getMediaType(previewURL) === mediaType.video ? (
+              {getMediaType(mediaFile) === mediaType.video ? (
                 <video width='100%' controls src={previewURL} />
               ) : (
                 <img src={previewURL} alt='Preview' />
               )}
             </>
-          )}
+          ) : itemToEdit ? (
+            <>
+              {getMediaType(itemToEdit.mediaPath) === mediaType.video ? (
+                <video width='100%' controls src={itemToEdit.mediaPath} />
+              ) : (
+                <img src={itemToEdit.mediaPath} alt='Preview' />
+              )}
+            </>
+          ) : null}
 
           <input type='text' placeholder='Title' value={title} onChange={(e) => setTitle(e.target.value)} />
           <textarea placeholder='Description' value={description} onChange={(e) => setDescription(e.target.value)} />
