@@ -9,10 +9,11 @@ const StartScreen = () => {
 
   return (
     <section className='start-screen'>
+      <div className='overlay'></div>
       <img src={MainShop} className='bg' alt='' />
       <div className='content' id='home' data-aos='fade-up'>
         <h2>Fenora Management</h2>
-        <p>One Step away from browse, and purchase goods or services.</p>
+        <p>Your Siited platform to browse, purchase, and sell goods or services. One Step away from seamless commerce.</p>
         {isAuthenticated ? (
           <Button name={"Go to DashBoard"} iconClass={"fab fa-sellcast"} to='/dashboard' />
         ) : (

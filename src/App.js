@@ -1,8 +1,9 @@
 import { Fragment } from "react/jsx-runtime";
 import { Routes, Route } from "react-router-dom";
 import StartScreen from "./components/StartScreen/StartScreen";
-import BuyerAuth from "./components/Buyer/BuyerAuth/BuyerAuth";
-import SellerAuth from "./components/Seller/SellerAuth/SellerAuth";
+import UserAuthPage from "./components/Auth/UserAuthPage/UserAuthPage";
+import BuyerBg from "./media/assets/images/buyer.png";
+import SellerBg from "./media/assets/images/seller.png";
 import Login from "./components/Auth/Login/Login";
 import Register from "./components/Auth/Register/Register";
 import Dashboard from "./components/DashBoard/DashBoard";
@@ -29,7 +30,7 @@ function App() {
           path='/buyer'
           element={
             <GuestRoute>
-              <BuyerAuth basePath={"buyer"} />
+              <UserAuthPage title={"Welcome to the Buyer Hub"} basePath={"buyer"} bgImg={BuyerBg} />
             </GuestRoute>
           }
         >
@@ -40,7 +41,12 @@ function App() {
           path='/seller'
           element={
             <GuestRoute>
-              <SellerAuth basePath={"seller"} />
+              <UserAuthPage
+                title={"Welcome to the Seller Hub"}
+                subTitle={"Manage listings, connect with buyers, and grow your business."}
+                basePath={"seller"}
+                bgImg={SellerBg}
+              />
             </GuestRoute>
           }
         >

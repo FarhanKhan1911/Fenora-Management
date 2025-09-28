@@ -1,15 +1,27 @@
-$primary-color: #3666b5;
+$primary-color: linear-gradient(135deg, #aedfd5 0%, #729cb0 100%);
 $secondary-color: #080f5b;
 $accent-color: #1a1a1d;
-$button-color: black;
-$button-hover-color: #ffd7;
+$button-color: #0d444c;
+$button-hover-color: #053d3a;
 $white: #fff;
+$heading: #0d444c;
+$sub-heading: #053d3a;
 $shadow-color: rgba(0, 0, 0, 0.2);
 $font-family: "Poppins", sans-serif;
 $transition-time: 0.5s;
 
 .start-screen {
-  background-color: $primary-color;
+  background: $primary-color;
+  .overlay {
+    background: linear-gradient(136deg, #fafafa 0%, #80bede 100%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 95%;
+    height: 86%;
+    position: absolute;
+    display: flex;
+    margin: auto;
+    left: 45px;
+  }
 }
 
 section {
@@ -23,7 +35,7 @@ section {
   .bg {
     position: absolute;
     top: 40px;
-    right: 60px;
+    right: 0px;
     height: 90%;
     width: 60%;
   }
@@ -34,20 +46,16 @@ section {
     z-index: 1;
 
     h2 {
-      color: $white;
+      color: $heading;
       font-size: 3em;
-      font-weight: 700;
+      font-weight: bold;
       line-height: 1.1em;
-      -webkit-text-stroke: 2px $button-color;
-      paint-order: stroke fill;
     }
 
     p {
-      color: $white;
+      color: $sub-heading;
       font-size: 1.4em;
       margin: 20px 0 10px;
-      -webkit-text-stroke: 2px $button-color;
-      paint-order: stroke fill;
     }
 
     a,
@@ -61,20 +69,21 @@ section {
       border: none;
       text-decoration: none;
       cursor: pointer;
-      transform: 0.5s ease-in-out;
-      transition: $transition-time;
+      border: 2px solid $button-hover-color;
 
       &:hover {
         color: $button-color;
         text-decoration: none;
-        background-color: $button-hover-color;
-        transform: 0.5s ease-in;
+        background-color: $white;
       }
     }
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1260px) {
+  .start-screen .overlay {
+    display: none;
+  }
   section {
     .bg {
       position: absolute;
@@ -87,7 +96,6 @@ section {
     }
 
     .content p {
-      font-size: 2.3em;
       font-weight: 100;
       line-height: 1.1em;
       max-width: 620px;
