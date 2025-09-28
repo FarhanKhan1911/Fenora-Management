@@ -24,9 +24,9 @@ const ResetPassword = () => {
       const data = await response.data;
       if (response.ok) {
         if (data.role === userType.BuyerUser) {
-          navigate("buyer/login");
+          navigate("/buyer/login");
         } else {
-          navigate("seller/login");
+          navigate("/seller/login");
         }
       } else {
         setMessage(data.message || "Error resetting password");
