@@ -5,9 +5,9 @@ import CreatePost from "./Post/CreatePost/CreatePost";
 import ListPosts from "./Post/ListPosts/ListPosts";
 import Button from "../Button/Button";
 import { userType } from "../../redux/redux.type";
-import Navbar from "../Navbar/Navbar";
+import "./DashBoard.scss";
 
-function Dashboard() {
+const Dashboard = () => {
   const userRoleType = useSelector((state) => state.userType);
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
@@ -61,13 +61,16 @@ function Dashboard() {
 
   return (
     <Fragment>
-      <Navbar />
-      <h1>Welcome to Dashboard {userRoleType}</h1>
-      {userRoleType === userType.SellerUser && <Button name={"CreatePost"} onClickHandle={handleCreateOrEditPost} />}
-      {isPopupOpen && <CreatePost addItem={addItem} editItem={editItem} itemToEdit={itemToEdit} popupRef={popupRef} />}
-      <ListPosts createdPosts={items} onEdit={handleEdit} />
+      <div className='dashboard'>
+        <div className='dashboard-header'>
+          <h1>Welcome to Dashboard {userRoleType}</h1>
+          {userRoleType === userType.SellerUser && <Button name={"Create Post"} onClickHandle={handleCreateOrEditPost} />}
+        </div>
+        {isPopupOpen && <CreatePost addItem={addItem} editItem={editItem} itemToEdit={itemToEdit} popupRef={popupRef} />}
+        <ListPosts createdPosts={items} onEdit={handleEdit} />
+      </div>
     </Fragment>
   );
-}
+};
 
 export default Dashboard;

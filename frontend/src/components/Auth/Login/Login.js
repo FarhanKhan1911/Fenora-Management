@@ -44,7 +44,7 @@ const Login = ({ userType }) => {
 
           <div className='form-actions'>
             <button type='submit'>login</button>
-            <Link href='#' className='forgot-password'>
+            <Link to='/forget-password' className='forget-password'>
               Forget password
             </Link>
           </div>

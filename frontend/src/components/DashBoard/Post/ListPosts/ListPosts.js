@@ -1,13 +1,14 @@
 import axios from "axios";
 import Button from "../../../Button/Button";
 import "./ListPosts.scss";
-import { deletePostAPI, getAllPostsAPI } from "../../../../utils/ApisConstants";
+import { DELETE_POST_API, GET_ALL_POSTS_API } from "../../../../utils/ApisConstants";
 import { useEffect, useState } from "react";
 import { multiPartFormData, useAuth } from "../../../../hooks/useAuth";
 import { getMediaType } from "../../../../utils/CommonHelper";
 import { mediaType, userType } from "../../../../redux/redux.type";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import defaultProfilePic from "../../../../media/assets/images/default-profile.png";
 
 const ListPosts = ({ createdPosts, onEdit }) => {
   const [items, setItems] = useState([]);
@@ -18,7 +19,7 @@ const ListPosts = ({ createdPosts, onEdit }) => {
 
   const handleOnPostDelete = async (itemId) => {
     try {
-      await axios.delete(deletePostAPI(itemId), multiPartFormData(auth));
+      await axios.delete(DELETE_POST_API(itemId), multiPartFormData(auth));
       setItems(items.filter((item) => item.id !== itemId));
       alert("Post Deleted Successfully!");
     } catch (err) {
@@ -34,7 +35,7 @@ const ListPosts = ({ createdPosts, onEdit }) => {
     if (auth) {
       const fetchPosts = async () => {
         try {
-          const response = await axios.get(getAllPostsAPI, multiPartFormData(auth));
+          const response = await axios.get(GET_ALL_POSTS_API, multiPartFormData(auth));
           setItems(response.data);
         } catch (err) {
           alert(err.response?.data?.message || "Failed to fetch posts");
@@ -49,9 +50,14 @@ const ListPosts = ({ createdPosts, onEdit }) => {
       {items.map((item, index) => {
         const isCurrentUserAuthenticated = userId === item.userId;
         return (
-          <div key={item.id} className='list-item'>
+          <div key={index} className='list-item'>
             <div className='post-header-wrapper'>
-              <Button name={item.user.name} className='author-name' onClickHandle={() => handleTitleClick(item)} />
+              <Button
+                name={item.user.name}
+                className='author-name'
+                onClickHandle={() => handleTitleClick(item)}
+                children={<img className='profile-pic' src={item.user.mediaPath ?? defaultProfilePic} alt='' />}
+              />
               {isCurrentUserAuthenticated && (
                 <Button className='delete-post-btn' iconClass={"fas fa-trash"} onClickHandle={() => handleOnPostDelete(item.id)} />
               )}

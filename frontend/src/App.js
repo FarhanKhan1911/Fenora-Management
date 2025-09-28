@@ -9,10 +9,20 @@ import Dashboard from "./components/DashBoard/DashBoard";
 import ProfilePage from "./components/Users/ProfilePage/ProfilePage";
 import { userType } from "./redux/redux.type";
 import { GuestRoute } from "./hooks/useAuth";
+import Chat from "./components/Chat/Chat";
+import Navbar from "./components/Navbar/Navbar";
+import { useLocation } from "react-router-dom";
+import { hideNavbarPatterns } from "./utils/constants";
+import ForgetPassword from "./components/Auth/ForgetPassword/ForgetPassword";
+import ResetPassword from "./components/Auth/ForgetPassword/ResetPassword/ResetPassword";
 
 function App() {
+  const location = useLocation();
+  const shouldHideNavbar = hideNavbarPatterns.some((pattern) => pattern.test(location.pathname));
+
   return (
     <Fragment>
+      {!shouldHideNavbar && <Navbar />}
       <Routes>
         <Route path='/' element={<StartScreen />} />
         <Route
@@ -37,8 +47,11 @@ function App() {
           <Route path='login' element={<Login userType={userType.SellerUser} />} />
           <Route path='register' element={<Register userType={userType.SellerUser} />} />
         </Route>
+        <Route path='/forget-password' element={<ForgetPassword />} />
+        <Route path='/reset-password/:id/:token' element={<ResetPassword />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/profile/:userId' element={<ProfilePage />} />
+        <Route path='/chat' element={<Chat />} />
       </Routes>
     </Fragment>
   );
