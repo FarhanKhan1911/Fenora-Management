@@ -31,7 +31,7 @@ const getAllPost = async (req, res) => {
           attributes: { exclude: ["password", ...ignoreAttributes] },
         },
       ],
-      attributes: { exclude: ignoreAttributes },
+      attributes: { exclude: ignoreAttributes.slice(0, -1) },
       order: [["createdAt", "DESC"]],
     });
 
