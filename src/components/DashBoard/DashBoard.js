@@ -64,7 +64,7 @@ const Dashboard = () => {
       <div className='dashboard'>
         <div className='dashboard-header'>
           <h1>Welcome to Dashboard {userRoleType}</h1>
-          {userRoleType === userType.SellerUser && <Button name={"CreatePost"} onClickHandle={handleCreateOrEditPost} />}
+          {userRoleType === userType.SellerUser && <Button name={"Create Post"} onClickHandle={handleCreateOrEditPost} />}
         </div>
         {isPopupOpen && <CreatePost addItem={addItem} editItem={editItem} itemToEdit={itemToEdit} popupRef={popupRef} />}
         <ListPosts createdPosts={items} onEdit={handleEdit} />

@@ -10,12 +10,14 @@ body.no-scroll {
   left: 0;
   background-color: #0000003d;
   display: flex;
-  align-items: center;
-  overflow: scroll;
+  overflow: auto;
   z-index: 1;
+  padding: 2rem;
+
   .create-view {
     max-width: 800px;
-    margin: 2rem auto;
+    height: max-content;
+    margin: auto;
     padding: 2rem;
     background-color: white;
     border-radius: 12px;
@@ -78,7 +80,6 @@ body.no-scroll {
     img,
     video {
       margin-top: 1rem;
-      max-width: 100%;
       border-radius: 8px;
       object-fit: cover;
     }

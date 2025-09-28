@@ -90,15 +90,23 @@ const CreatePost = ({ addItem, editItem, itemToEdit, popupRef }) => {
         <form onSubmit={handleSubmit}>
           <input type='file' accept='image/*,video/*' onChange={handleFileChange} />
 
-          {previewURL && (
+          {mediaFile ? (
             <>
-              {getMediaType(previewURL) === mediaType.video ? (
+              {getMediaType(mediaFile) === mediaType.video ? (
                 <video width='100%' controls src={previewURL} />
               ) : (
                 <img src={previewURL} alt='Preview' />
               )}
             </>
-          )}
+          ) : itemToEdit ? (
+            <>
+              {getMediaType(itemToEdit.mediaPath) === mediaType.video ? (
+                <video width='100%' controls src={itemToEdit.mediaPath} />
+              ) : (
+                <img src={itemToEdit.mediaPath} alt='Preview' />
+              )}
+            </>
+          ) : null}
 
           <input type='text' placeholder='Title' value={title} onChange={(e) => setTitle(e.target.value)} />
           <textarea placeholder='Description' value={description} onChange={(e) => setDescription(e.target.value)} />
