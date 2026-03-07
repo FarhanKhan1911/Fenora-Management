@@ -43,7 +43,7 @@ const Login = ({ userType }) => {
           <input type='password' id='password' name='password' onChange={handleChange} />
 
           <div className='form-actions'>
-            <button type='submit'>login</button>
+            <button type='submit'>Login</button>
             <Link to='/forget-password' className='forget-password'>
               Forget password
             </Link>
