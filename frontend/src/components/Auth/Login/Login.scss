@@ -1,3 +1,5 @@
+@import "../../StartScreen/StartScreen.scss";
+
 .login-wrapper {
   width: 100%;
   display: flex;
@@ -9,7 +11,7 @@
     border-radius: 15px;
     padding: 2rem;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    border: 5px solid #f4e2c0; 
+    border: 5px solid #f4e2c0;
     width: 100%;
 
     h2 {
@@ -48,16 +50,22 @@
         margin-top: 1rem;
 
         button {
-          background-color: white;
-          border: 2px solid #6ab7ff;
-          color: #0077ff;
-          padding: 0.5rem 1rem;
-          border-radius: 5px;
+          color: $white;
+          background-color: $button-color;
+          font-size: 1em;
+          margin: 20px 10px;
+          padding: 5px 20px;
+          display: inline-block;
+          text-decoration: none;
           cursor: pointer;
-          text-transform: lowercase;
+          border: 2px solid $button-hover-color;
+          border-radius: 4px;
 
           &:hover {
-            background-color: #e1f0ff;
+            color: $button-color;
+            text-decoration: none;
+            background-color: $white;
+            opacity: 1;
           }
         }
 
