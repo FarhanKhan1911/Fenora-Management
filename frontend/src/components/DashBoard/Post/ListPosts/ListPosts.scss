@@ -1,5 +1,4 @@
 .list-view {
-  margin-top: 3rem;
   max-width: 800px;
   margin: 2rem auto;
   padding: 2rem;
@@ -43,6 +42,9 @@
         padding-left: 0px;
         width: min-content;
         text-wrap: nowrap;
+        &:hover {
+          opacity: 1;
+        }
       }
     }
 
@@ -62,6 +64,12 @@
       color: #555;
     }
 
+    .buyer-buttons {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
     button {
       align-self: start;
       background-color: #3498db;
@@ -71,10 +79,9 @@
       border-radius: 6px;
       font-size: 0.9rem;
       cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #2980b9;
+      &:hover {
+        background-color: #2980b9;
+      }
     }
   }
 }

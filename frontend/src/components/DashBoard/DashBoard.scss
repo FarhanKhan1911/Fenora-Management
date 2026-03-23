@@ -1,5 +1,5 @@
 .dashboard {
-  background: white;
+  background: linear-gradient(136deg, #fafafa 0%, #80bede 100%);
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
@@ -10,6 +10,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
+    color: #0d444c;
     h2 {
       font-size: 20px;
       margin: 0;

@@ -81,7 +81,10 @@ const ListPosts = ({ createdPosts, onEdit }) => {
             {isCurrentUserAuthenticated ? (
               <button onClick={() => onEdit(item, index)}>Edit</button>
             ) : userRoleType === userType.BuyerUser ? (
-              <Button name={"Buy Now"} onClickHandle={() => alert("Buy functionality not implemented yet")} />
+              <div className='buyer-buttons'>
+                <Button name={"Buy Now"} onClickHandle={() => alert("Buy functionality not implemented yet")} />
+                <Button name={"Make Offer"} onClickHandle={() => alert("Make Offer functionality not implemented yet")} />
+              </div>
             ) : null}
           </div>
         );

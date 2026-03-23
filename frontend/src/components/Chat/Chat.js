@@ -2,8 +2,10 @@ import SideBar from "./SideBar/SideBar";
 import ChatArea from "./ChatArea/ChatArea";
 import "./Chat.scss";
 import BackButton from "../Button/BackButton";
+import { useAuth } from "../../hooks/useAuth";
 
 const Chat = () => {
+  const auth = useAuth();
   return (
     <div className='chat-app'>
       <div className='header-row'>
