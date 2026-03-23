@@ -13,7 +13,7 @@ const StartScreen = () => {
       <img src={MainShop} className='bg' alt='' />
       <div className='content' id='home' data-aos='fade-up'>
         <h2>Fenora Management</h2>
-        <p>Your Siited platform to browse, purchase, and sell goods or services. One Step away from seamless commerce.</p>
+        <p>Your trusted platform to browse, purchase, and sell goods or services—just one step away from seamless commerce.</p>
         {isAuthenticated ? (
           <Button name={"Go to DashBoard"} iconClass={"fab fa-sellcast"} to='/dashboard' />
         ) : (
