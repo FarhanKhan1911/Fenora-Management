@@ -1,4 +1,5 @@
 # Fenora Management
+<img src="https://github.com/FarhanKhan1911/Fenora-Management/blob/main/frontend/src/media/assets/images/landing-page.jpg">
 
 ## Description
 
