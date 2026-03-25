@@ -1,6 +1,54 @@
 .chat-messages {
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
-  height: 380px;
+  overflow-y: overlay;
+  height: 374px;
+  padding: 10px;
+}
+
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  color: #666;
+  font-size: 14px;
+
+  .typing-dots {
+    display: flex;
+    margin-right: 8px;
+
+    span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #666;
+      margin: 0 2px;
+      animation: typing 1.4s infinite ease-in-out;
+
+      &:nth-child(1) {
+        animation-delay: -0.32s;
+      }
+
+      &:nth-child(2) {
+        animation-delay: -0.16s;
+      }
+    }
+  }
+
+  .typing-text {
+    font-style: italic;
+  }
+}
+
+@keyframes typing {
+  0%,
+  80%,
+  100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
