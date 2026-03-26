@@ -1,9 +1,10 @@
 # Fenora Management
+
 <img src="https://github.com/FarhanKhan1911/Fenora-Management/blob/main/frontend/src/media/assets/images/landing-page.jpg">
 
 ## Description
 
-Fenora Management is a full-stack web application designed to facilitate interactions between buyers and sellers. It includes user authentication, role-based access control, post management, and real-time chat features. The platform allows sellers to create and manage posts, while buyers can browse and interact with them.
+Fenora Management is a full-stack web application designed to facilitate interactions between buyers and sellers. It includes user authentication, role-based access control, post management, and real-time chat features. The platform allows sellers to create and manage posts with media uploads, while buyers can browse, interact with them, and communicate with sellers through an integrated real-time chat system.
 
 ## Tech Stack
 
@@ -11,135 +12,211 @@ Fenora Management is a full-stack web application designed to facilitate interac
 
 - **Node.js** - Runtime environment
 - **Express.js** - Web framework
-- **PostgreSQL** - Database
+- **PostgreSQL** - Relational database
 - **Sequelize** - ORM for database interactions
-- **JWT** - Authentication tokens
-- **bcrypt** - Password hashing
-- **multer** - File uploads
-- **nodemailer** - Email services
+- **Socket.IO** - Real-time bidirectional communication
+- **JWT** - Authentication and authorization
+- **bcrypt** - Secure password hashing
+- **multer** - File upload handling
+- **nodemailer** - Email service integration
+- **cors** - Cross-origin resource sharing
 
 ### Frontend
 
 - **React** - UI library
-- **Redux** - State management
+- **React Router DOM** - Client-side routing
+- **Redux & Redux Toolkit** - State management
 - **Axios** - HTTP client
-- **React Router** - Routing
-- **Sass** - Styling
-- **Webpack** - Module bundler (via Create React App)
+- **Socket.IO Client** - Real-time communication
+- **Sass/SCSS** - Styling
+- **React Scripts** - Build and development tools
 
 ## Features
 
-- **User Authentication**: Register, login, logout, password reset via email
-- **Role-Based Access**: Separate permissions for buyers and sellers
-- **Post Management**: Sellers can create, edit, and delete posts with media uploads
-- **Profile Management**: Users can view and update their profiles
-- **Chat System**: Real-time messaging between users
-- **Dashboard**: Overview of posts and user activities
+- **User Authentication & Authorization**
+  - Register as buyer or seller
+  - Login/Logout with JWT tokens
+  - Password reset via email
+  - Token blacklisting for secure logout
+  - Role-based access control (RBAC)
+
+- **Post Management**
+  - Sellers can create, edit, and delete posts
+  - Media upload support for posts
+  - Buyers can view all available posts
+
+- **User Profile Management**
+  - View and update user profiles
+  - Profile picture management
+  - Buyer and seller-specific features
+
+- **Real-Time Chat System**
+  - Real-time messaging between buyers and sellers
+  - Chat room management via Socket.IO
+  - Message history persistence
+  - Online user presence tracking
+  - Join/leave chat notifications
+
+- **Role-Based Protections**
+  - Buyer-only and seller-only content areas
+  - Protected routes with middleware authentication
+  - Action-specific permissions (create/edit/delete posts)
 
 ## Installation
 
 ### Prerequisites
 
-- Node.js (v14 or higher)
-- PostgreSQL
-- npm or yarn
+- Node.js (v14 or higher recommended v18+)
+- PostgreSQL (v12 or higher)
+- npm or yarn package manager
 
 ### Backend Setup
 
 1. Navigate to the backend directory:
-   ```
+
+   ```bash
    cd backend
    ```
+
 2. Install dependencies:
-   ```
+
+   ```bash
    npm install
    ```
-3. Create a `.env` file in the backend root with the following variables:
-   ```
+
+3. Create a `.env` file in the backend root directory with the following variables:
+
+   ```env
    PORT=5000
+   NODE_ENV=development
+
+   # Database Configuration
    DATABASE_URL=postgresql://username:password@localhost:5432/fenora_db
-   JWT_SECRET=your_jwt_secret
+   DB_HOST=localhost
+   DB_PORT=5432
+   DB_NAME=fenora_db
+   DB_USER=postgres
+   DB_PASSWORD=your_password
+
+   # JWT Configuration
+   JWT_SECRET=your_super_secret_jwt_key_here
+   JWT_EXPIRE=7d
+
+   # Email Configuration (Gmail OAuth2 or SMTP)
    EMAIL_USER=your_email@gmail.com
-   EMAIL_PASS=your_email_password
+   EMAIL_PASS=your_app_specific_password
+
+   # Frontend Origin (for Socket.IO CORS)
+   FRONTEND_URL=http://localhost:3000
    ```
+
 4. Start the development server:
-   ```
+   ```bash
    npm run dev
    ```
+   The backend will run on `http://localhost:5000`
 
 ### Frontend Setup
 
 1. Navigate to the frontend directory:
-   ```
+
+   ```bash
    cd frontend
    ```
+
 2. Install dependencies:
-   ```
+
+   ```bash
    npm install
    ```
-3. Start the development server:
+
+3. Create a `.env` file in the frontend root directory (optional):
+
+   ```env
+   REACT_APP_API_URL=http://localhost:5000/api
+   REACT_APP_SOCKET_URL=http://localhost:5000
    ```
+
+4. Start the development server:
+
+   ```bash
    npm start
    ```
 
-The application will be available at `http://localhost:3000` for the frontend and `http://localhost:5000` for the backend API.
+   The application will be available at `http://localhost:3000`
+
+5. Build for production:
+   ```bash
+   npm run build
+   ```
 
 ## Usage
 
-1. **Registration**: Users can register as either buyers or sellers.
-2. **Login**: Authenticate using email and password.
-3. **Dashboard**: Sellers can create and manage posts; buyers can view posts.
-4. **Chat**: Engage in conversations with other users.
-5. **Profile**: Update personal information and profile picture.
+### User Workflows
 
-## API Endpoints
+**As a Buyer:**
 
-### Authentication
+1. Visit the landing page and select "Buyer Hub"
+2. Register with email and password
+3. Browse seller posts from the dashboard
+4. Click on posts to view details
+5. Initiate a chat with sellers for inquiries
+6. View your messages in real-time via the chat interface
+7. Manage your profile and preferences
 
-- `POST /api/auth/register` - User registration
-- `POST /api/auth/login` - User login
-- `POST /api/auth/logout` - User logout
-- `POST /api/auth/forget-password` - Request password reset
-- `POST /api/auth/reset-password/:id/:token` - Reset password
-- `GET /api/auth/get-profile/:id` - Get user profile
-- `PUT /api/auth/update-profile/:id` - Update user profile
+**As a Seller:**
 
-### Posts
+1. Visit the landing page and select "Seller Hub"
+2. Register with your business details
+3. Access your dashboard
+4. Create new posts with:
+   - Title, description, and pricing
+   - Product images and media
+   - Category and availability
+5. Edit or delete existing posts
+6. Respond to buyer inquiries in real-time
+7. Manage buyer communications via chat
+8. Update your seller profile
 
-- `POST /api/posts/create-post` - Create a new post (Seller only)
-- `GET /api/posts/all-posts` - Get all posts
-- `PUT /api/posts/edit-post/:id` - Edit a post (Seller only)
-- `DELETE /api/posts/delete-post/:id` - Delete a post (Seller only)
+### Core Features in Action
 
-### Protected Routes
-
-- `GET /api/buyer-data` - Buyer-only content
-- `GET /api/seller-data` - Seller-only content
+- **Password Recovery**: Use "Forgot Password" to reset your password via email
+- **Real-Time Chat**: Messages appear instantly as they're sent
+- **Post Management**: Create drafts or publish posts immediately
+- **Profile Updates**: Change profile information and avatar anytime
 
 ## Project Structure
 
 ```
 Fenora-Management/
-├── backend/
+│
+├── backend/                          # Node.js Express server
 │   ├── src/
-│   │   ├── config/
-│   │   ├── constants/
-│   │   ├── controllers/
-│   │   ├── middleware/
-│   │   ├── models/
-│   │   ├── routes/
-│   │   ├── utils/
-│   │   └── server.js
+│   │   ├── config/                   # Database configuration
+│   │   ├── controllers/              # Business logic (auth, chat, posts)
+│   │   ├── middleware/               # Authentication & role-based access
+│   │   ├── models/                   # Sequelize database models
+│   │   ├── routes/                   # API route definitions
+│   │   ├── utils/                    # Utility functions & helpers
+│   │   └── server.js                 # Main Express server
+│   ├── .env                          # Environment variables
 │   └── package.json
-├── frontend/
+│
+├── frontend/                         # React application
 │   ├── public/
+│   │   └── index.html                # HTML entry point
 │   ├── src/
-│   │   ├── components/
-│   │   ├── hooks/
-│   │   ├── redux/
-│   │   ├── utils/
-│   │   └── App.js
+│   │   ├── components/               # React components (Auth, Chat, Dashboard, etc.)
+│   │   ├── hooks/                    # Custom React hooks
+│   │   ├── redux/                    # State management
+│   │   ├── utils/                    # Utility functions & API calls
+│   │   ├── media/                    # Static assets
+│   │   ├── App.js                    # Root component
+│   │   └── index.js                  # React entry point
+│   ├── .env                          # Environment variables (optional)
 │   └── package.json
+│
+├── .gitignore
 └── README.md
 ```
 
@@ -147,10 +224,17 @@ Fenora-Management/
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+3. Make your changes with clear, descriptive commits
+4. Commit your changes:
+   ```bash
+   git commit -m 'Add some AmazingFeature'
+   ```
+5. Push to the branch:
+   ```bash
+   git push origin feature/AmazingFeature
+   ```
+6. Open a Pull Request with a description of changes
 
-## Contact
+## Contact & Support
 
-For questions or support, please contact the development team.
+For questions, suggestions, or support, please reach out to the development team or open an issue on GitHub.
