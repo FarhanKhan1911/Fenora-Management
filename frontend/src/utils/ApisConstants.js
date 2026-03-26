@@ -12,3 +12,8 @@ export const CREATE_POST_API = `${baseUrl}/posts/create-post`;
 export const GET_ALL_POSTS_API = `${baseUrl}/posts/all-posts`;
 export const EDIT_POST_API = (id) => `${baseUrl}/posts/edit-post/${id}`;
 export const DELETE_POST_API = (id) => `${baseUrl}/posts/delete-post/${id}`;
+
+export const GET_CHATS_API = `${baseUrl}/chat`;
+export const CREATE_CHAT_API = `${baseUrl}/chat`;
+export const GET_MESSAGES_API = (chatId) => `${baseUrl}/chat/${chatId}/messages`;
+export const SEND_MESSAGE_API = (chatId) => `${baseUrl}/chat/${chatId}/messages`;

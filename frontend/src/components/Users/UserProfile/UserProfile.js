@@ -7,10 +7,13 @@ import { multiPartFormData, useAuth } from "../../../hooks/useAuth";
 import Button from "../../Button/Button";
 import defaultProfilePic from "../../../media/assets/images/default-profile.png";
 import BackButton from "../../Button/BackButton";
+import { useNavigate } from "react-router-dom";
+// import { createChat } from "../../../utils/chatApi";
 
 const UserProfile = ({ user }) => {
   const userId = useSelector((state) => state.userId);
   const auth = useAuth();
+  const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     phone: user.phone || "",
@@ -55,6 +58,16 @@ const UserProfile = ({ user }) => {
       setIsEditing(false);
     } catch (err) {
       alert(err.response?.data?.message || "Failed to put User Data");
+    }
+  };
+
+  const handleStartChat = async () => {
+    try {
+      // const response = await createChat(user.id);
+      // Navigate to chat page - you might want to pass the chatId or select the chat
+      navigate("/chat");
+    } catch (error) {
+      alert("Failed to start chat: " + error.message);
     }
   };
 
@@ -122,6 +135,12 @@ const UserProfile = ({ user }) => {
         {renderField("Country", "country", formData.country, isEditing, handleChange)}
         {renderField("Pin Code", "pinCode", formData.pinCode, isEditing, handleChange)}
       </div>
+
+      {userId !== user.id && (
+        <div className='action-button-wrapper' style={{ marginTop: "1rem" }}>
+          <Button name={"Start Chat"} onClickHandle={handleStartChat} />
+        </div>
+      )}
 
       {userId === user.id && (
         <div className='action-button-wrapper' style={{ marginTop: "1rem" }}>
