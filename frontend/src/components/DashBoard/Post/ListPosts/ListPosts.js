@@ -9,6 +9,7 @@ import { mediaType, userType } from "../../../../redux/redux.type";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import defaultProfilePic from "../../../../media/assets/images/default-profile.png";
+import { createChat } from "../../../../utils/chatApi";
 
 const ListPosts = ({ createdPosts, onEdit }) => {
   const [items, setItems] = useState([]);
@@ -24,6 +25,15 @@ const ListPosts = ({ createdPosts, onEdit }) => {
       alert("Post Deleted Successfully!");
     } catch (err) {
       alert(err.response?.data?.message || "Failed to delete post");
+    }
+  };
+
+  const handleStartChat = async (sellerId) => {
+    try {
+      await createChat(sellerId);
+      navigate("/chat");
+    } catch (error) {
+      alert("Failed to start chat: " + error.message);
     }
   };
 
@@ -84,6 +94,7 @@ const ListPosts = ({ createdPosts, onEdit }) => {
               <div className='buyer-buttons'>
                 <Button name={"Buy Now"} onClickHandle={() => alert("Buy functionality not implemented yet")} />
                 <Button name={"Make Offer"} onClickHandle={() => alert("Make Offer functionality not implemented yet")} />
+                <Button name={"Message Seller"} onClickHandle={() => handleStartChat(item.userId)} />
               </div>
             ) : null}
           </div>
