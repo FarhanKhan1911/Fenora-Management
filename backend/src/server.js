@@ -9,12 +9,13 @@ const TokenBlackList = require("./models/TokenBlackList");
 const Post = require("./models/Post");
 const Chat = require("./models/Chat");
 const Message = require("./models/Message");
+const { baseUrl } = require("./utils/apiContants");
 
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: baseUrl,
     methods: ["GET", "POST"],
   },
 });
@@ -36,19 +37,16 @@ app.use("/media", express.static("media"));
 io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
 
-  // Join chat room
   socket.on("joinChat", (chatId) => {
     socket.join(chatId);
     console.log(`User ${socket.id} joined chat ${chatId}`);
   });
 
-  // Leave chat room
   socket.on("leaveChat", (chatId) => {
     socket.leave(chatId);
     console.log(`User ${socket.id} left chat ${chatId}`);
   });
 
-  // Handle typing indicators
   socket.on("typing", (data) => {
     socket.to(data.chatId).emit("userTyping", { userId: data.userId, isTyping: true });
   });

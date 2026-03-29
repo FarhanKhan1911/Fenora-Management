@@ -1,7 +1,7 @@
 {
   "name": "fenora-backend",
   "version": "1.0.0",
-  "description": "Auth backend for buyer and seller users (Node.js, Express, MongoDB, JWT)",
+  "description": "Auth backend for buyer and seller users (Node.js, Express, PostGreSQL, JWT)",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
