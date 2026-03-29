@@ -84,7 +84,7 @@ const deletePost = async (req, res) => {
         __dirname,
         "..",
         "..",
-        postWithMediaPath[0].mediaPath.replace(req.protocol + "://" + req.get("host"), "").replace(/^\//, "")
+        postWithMediaPath[0].mediaPath.replace(req.protocol + "://" + req.get("host"), "").replace(/^\//, ""),
       );
       if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);

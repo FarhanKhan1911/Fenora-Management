@@ -139,10 +139,8 @@ const sendMessage = async (req, res) => {
       content,
     });
 
-    // Update chat updatedAt
     await chat.update({ updatedAt: new Date() });
 
-    // Get the full message with sender info for real-time emission
     const messageWithSender = await Message.findOne({
       where: { id: message.id },
       include: [{ model: User, as: "sender", attributes: ["id", "name", "role", "mediaURL"] }],

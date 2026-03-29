@@ -108,18 +108,21 @@ const userLogout = async (req, res) => {
   }
 };
 
-setInterval(async () => {
-  try {
-    await TokenBlacklist.destroy({
-      where: {
-        expiresAt: { [require("sequelize").Op.lt]: new Date() },
-      },
-    });
-    console.log("Expired tokens cleaned");
-  } catch (err) {
-    console.error("Token cleanup error:", err);
-  }
-}, 1 * 60 * 60 * 1000);
+setInterval(
+  async () => {
+    try {
+      await TokenBlacklist.destroy({
+        where: {
+          expiresAt: { [require("sequelize").Op.lt]: new Date() },
+        },
+      });
+      console.log("Expired tokens cleaned");
+    } catch (err) {
+      console.error("Token cleanup error:", err);
+    }
+  },
+  1 * 60 * 60 * 1000,
+);
 
 const getUserProfile = async (req, res) => {
   try {
