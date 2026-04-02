@@ -1,6 +1,5 @@
 import io from "socket.io-client";
-
-const SOCKET_URL = "http://localhost:5000";
+import { baseUrl } from "./ApisConstants";
 
 class SocketService {
   constructor() {
@@ -9,7 +8,7 @@ class SocketService {
   }
 
   connect() {
-    this.socket = io(SOCKET_URL);
+    this.socket = io(baseUrl);
     return this.socket;
   }
 
